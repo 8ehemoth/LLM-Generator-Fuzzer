@@ -1,0 +1,20 @@
+{
+  "service_id": "0xFF40",
+  "method_id": "0x000A",
+  "name": "seatHeatingStatusSet",
+  "type": "setter",
+  "payload": {
+    "structure": "array",
+    "length_field": {
+      "size": 4,
+      "type": "uint32",
+      "value": 7
+    },
+    "element": {
+      "type": "uint8",
+      "semantic": "boolean",
+      "allowed_values": [0, 1]
+    },
+    "array_length": 7
+  }
+}
