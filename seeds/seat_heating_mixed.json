@@ -1,0 +1,8 @@
+{
+  "method_id": "0x000C",
+  "description": "Mixed heating levels",
+  "payload": {
+    "length": 7,
+    "values": [0, 1, 2, 3, 2, 1, 0]
+  }
+}
