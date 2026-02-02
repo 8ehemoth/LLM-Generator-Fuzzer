@@ -1,0 +1,8 @@
+{
+  "method_id": "0x000C",
+  "description": "Set all seat heating level to medium",
+  "payload": {
+    "length": 7,
+    "values": [2, 2, 2, 2, 2, 2, 2]
+  }
+}
