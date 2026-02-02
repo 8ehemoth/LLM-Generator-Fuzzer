@@ -73,4 +73,66 @@ Method ID만으로 Request/Response를 단정하지 말고 MsgType으로 방향/
 | 0x0009 | seatHeatingStatus | Getter | 없음 | 히팅 ON/OFF 상태 배열(Boolean[]) 조회 |
 | 0x000A | seatHeatingStatus(values) | Setter | 있음 | 히팅 ON/OFF 배열(Boolean[]) 설정 |
 | 0x000B | seatHeatingLevel | Getter | 없음 | 히팅 레벨 배열(UInt8[]) 조회 |
-| 0x000C | seatHeatingLev
+| 0x000C | seatHeatingLevel(values) | Setter | 있음 | 히팅 레벨 배열(UInt8[]) 설정 |
+
+배열 payload 직렬화(전형):
+- `[4바이트 길이 N] + [원소 N개]`
+- 예: N=7이면 payload가 대개 11 bytes 형태로 관측됨
+
+주의:
+- 서버(31000)→클라(ephemeral port) 방향의 프레임은 Response일 가능성이 높다.
+- Setter “요청” 샘플은 클라(ephemeral port)→서버(31000) 방향에서 찾아야 한다.
+
+---
+
+### 4.4 기타(자주 등장 가능) Getter/Command
+
+| Method ID | 의미(semantic) | 구분 | 설명 |
+|---:|---|---|---|
+| 0x0001 | consumption | Getter | 소비/연비/전력 소비 관련 값 조회 |
+| 0x0002 | capacity | Getter | 용량 관련 값 조회 |
+| 0x0003 | volume | Getter | 부피/용량 관련 값 조회 |
+| 0x0004 | engineSpeed | Getter | 엔진/모터 회전수 조회 |
+| 0x0005 | currentGear | Getter | 현재 기어 상태 조회 |
+| 0x0006 | isReverseGearOn | Getter | 후진 여부 조회 |
+| 0x0007 | drivePowerTransmission | Getter | 구동 전달 방식 조회 |
+| 0x000D | initTirePressureCalibration() | Command | 타이어 공기압 캘리브레이션 트리거 |
+
+---
+
+## 5. Event 매핑(혼동 방지)
+
+| Event ID | 의미(semantic) | 비고 |
+|---:|---|---|
+| 0x8009 | vehiclePosition broadcast | 이벤트(브로드캐스트) |
+| 0x800A | currentTankVolume broadcast | door/heating 이벤트가 아님 |
+
+---
+
+## 6. Phase A 산출물(LLM 입력 스키마 / 출력 포맷)
+
+### 6.1 LLM에 제공할 스키마(요약)
+
+- service_id: 0xFF40
+- methods:
+  - 0x0008 doorsOpeningStatus_get
+  - 0x000E changeDoorsState
+  - 0x0009 seatHeatingStatus_get
+  - 0x000A seatHeatingStatus_set
+  - 0x000B seatHeatingLevel_get
+  - 0x000C seatHeatingLevel_set
+
+### 6.2 LLM이 생성할 테스트케이스(JSON) 예시
+
+```json
+{
+  "testcase_id": "tc_0001",
+  "service_id_hex": "0xFF40",
+  "sequence": [
+    {"method_id_hex": "0x000E", "params": {"door_cmd": ["OPEN","CLOSE","CLOSE","OPEN"]}},
+    {"method_id_hex": "0x000A", "params": {"heating_status": [1,0,1,0,1,0,1]}},
+    {"method_id_hex": "0x000C", "params": {"heating_level": [3,0,2,1,3,0,1]}}
+  ],
+  "timing": {"inter_call_delay_ms": [0,5,10,50]},
+  "mutation_tags": ["boundary","repeat","reorder"]
+}
