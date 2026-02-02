@@ -1,0 +1,8 @@
+{
+  "method_id": "0x000A",
+  "description": "Turn all seat heating ON",
+  "payload": {
+    "length": 7,
+    "values": [1, 1, 1, 1, 1, 1, 1]
+  }
+}
