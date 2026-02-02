@@ -1,0 +1,35 @@
+{
+  "rules": [
+    {
+      "name": "value_out_of_range",
+      "description": "Generate values outside allowed range",
+      "examples": [-1, 4, 255]
+    },
+    {
+      "name": "length_mismatch",
+      "description": "Mismatch between declared length and actual array",
+      "examples": {
+        "declared": 7,
+        "actual": [0, 1, 2]
+      }
+    },
+    {
+      "name": "oversized_array",
+      "description": "Excessively large array",
+      "examples": {
+        "declared": 7,
+        "actual_length": 100
+      }
+    },
+    {
+      "name": "all_same_extreme",
+      "description": "All values set to extreme",
+      "examples": [0, 255]
+    },
+    {
+      "name": "random_noise",
+      "description": "Random byte values",
+      "examples": "random_uint8"
+    }
+  ]
+}
