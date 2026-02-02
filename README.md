@@ -1,7 +1,3 @@
-좋아, 이제 **정리 + 다음 단계**를 한 번에 깔끔하게 마무리하자.
-아래 내용은 **그대로 `README.md`에 넣어도 되는 수준**으로 재구성했고,
-마지막에 **Phase B 코드 스켈레톤 + OpenAI API 연동 방법**까지 이어갈게.
-
 ---
 
 # SOME/IP Playground Service 분석 & LLM-Generator Fuzzer
