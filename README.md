@@ -1,5 +1,3 @@
-# LLM-Generator-Fuzzer
-
 # test-someip-service LLM-Generator Fuzzer (Phase A)
 
 본 프로젝트는 `test-someip-service`(SOME/IP) 트래픽을 캡처(pcapng)하고,
